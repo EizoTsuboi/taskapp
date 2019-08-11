@@ -94,11 +94,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-
     //SerchBardelegateメソッド
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        taskArray = try! Realm().objects(Task.self).filter("category == searchText").sorted(byKeyPath: "date", ascending: false)
-        
+        let predicate = NSPredicate(format: "category CONTAINS[c] %@", searchText)
+        taskArray = try! Realm().objects(Task.self).filter(predicate).sorted(byKeyPath: "date", ascending: false)
+        tableView.reloadData()
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
+        taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+        self.view.endEditing(true)
+        self.searchBar.text = ""
         tableView.reloadData()
     }
 }

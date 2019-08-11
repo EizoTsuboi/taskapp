@@ -17,6 +17,7 @@ class InputViewController: UIViewController {
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var dataPicker: UIDatePicker!
     
+    
     let realm = try! Realm()
     var task: Task!
     
